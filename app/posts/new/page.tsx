@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Post } from "@/types/Post";
+import { createPost } from "@/lib/api";
 
 export default function NewPostPage() {
   const router = useRouter();
@@ -10,32 +12,22 @@ export default function NewPostPage() {
   const [body, setBody] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [createdFakePost, setCreatedFakePost] = useState<Post | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
+    setCreatedFakePost(null);
 
     try {
-      const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          body,
-          userId: 1,
-        }),
+      const result = await createPost({
+        title,
+        body,
+        userId: 1,
       });
 
-      if (!res.ok) {
-        setError("Nie udało się utworzyć posta");
-      }
-
-      const newPost = await res.json();
-
-      router.push(`/posts/${newPost.id}`);
+      setCreatedFakePost(result);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -85,6 +77,25 @@ export default function NewPostPage() {
           {loading ? "Wysyłam..." : "Utwórz post"}
         </button>
       </form>
+      {createdFakePost && (
+        <div className="mt-6 p-4 border border-green-500 rounded bg-green-50">
+          <h2 className="text-xl font-bold text-green-700 mb-2">
+            Fake post został utworzony 🎉
+          </h2>
+
+          <p>ID zwrócone przez JSONPlaceholder: {createdFakePost.id}</p>
+
+          <p className="mt-2 text-gray-700">
+            <strong>Tytuł:</strong> {createdFakePost.title}
+            <br />
+            <strong>Treść:</strong> {createdFakePost.body}
+          </p>
+
+          <p className="text-green-700 mt-4">
+            JSONPlaceholder NIE zapisuje danych, tylko udaje zapis!
+          </p>
+        </div>
+      )}
       <button
         onClick={() => router.push("/")}
         className="mt-6 px-4 py-2 bg-gray-300 rounded hover:opacity-70"

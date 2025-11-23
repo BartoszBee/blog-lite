@@ -16,3 +16,25 @@ export async function getPost(id: string | number): Promise<Post> {
   if (!res.ok) throw new Error("Nie udało się pobrać posta");
   return res.json();
 }
+
+type createPostData = Omit<Post, "id">;
+
+export async function createPost(data: createPostData) {
+  const res = await fetch(`${BASE_URL}/posts`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: data.title,
+      body: data.body,
+      userId: data.userId,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Nie udało się utworzyć posta");
+  }
+
+  return res.json();
+}
