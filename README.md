@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📘 BlogLite — Next.js CRUD Showcase
 
-## Getting Started
+**Porównanie dwóch podejść do tworzenia CRUD w Next.js: klasyczny fetch oraz Server Actions.**
 
-First, run the development server:
+BlogLite to edukacyjno-portfolio projekt, który prezentuje dwa kompletne sposoby budowania CRUD w Next.js:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🔵 1. Klasyczny CRUD (`/posts/*`)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- fetch w `lib/api.ts`
+- komponenty klientowe
+- `useState`, `useEffect`
+- obsługa błędów po stronie klienta
+- routing oparty na `useRouter`
+- pełen flow: list → view → create → edit → delete
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🟡 2. Server Actions CRUD (`/actions/*`)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- mutacje wykonywane po stronie serwera
+- brak `useState` i `useEffect`
+- formularze HTML (`form action={...}`)
+- automatyczne `redirect()` po mutacji
+- `revalidatePath` po operacjach
+- pełen SSR — działanie bez JavaScript w przeglądarce
 
-## Learn More
+Projekt korzysta z **JSONPlaceholder**, który udaje zapis danych (`POST/PUT/DELETE` zwracają dane, ale ich nie zapisują).
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 🎯 **Cele projektu**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- pokazanie znajomości dwóch stylów pracy z Next.js
+- zrozumienie różnic między SSR, CSR i Server Actions
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# 🛠️ **Tech stack**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js 15 (App Router)**
+- **React 18**
+- **TypeScript**
+- **Tailwind CSS**
+- **Server Actions**
+- **SSR / fetch API**
+- **JSONPlaceholder REST API**
