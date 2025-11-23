@@ -38,3 +38,17 @@ export async function createPost(data: createPostData) {
 
   return res.json();
 }
+
+export async function updatePost(post: Post) {
+  const res = await fetch(`${BASE_URL}/posts/${post.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(post),
+  });
+  if (!res.ok) {
+    throw new Error("Nie udało się zaktualizować posta");
+  }
+  return res.json();
+}
