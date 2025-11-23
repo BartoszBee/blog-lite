@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { getPost, updatePost } from "@/lib/api";
 import { Post } from "@/types/Post";
+import Link from "next/link";
 
 export default function EditPostPage({
   params,
@@ -126,6 +127,13 @@ export default function EditPostPage({
           </p>
         </div>
       )}
+
+      <Link
+        href={`/`}
+        className="inline-block px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400  transition mt-6"
+      >
+        ← Powrót do listy
+      </Link>
     </main>
   );
 }

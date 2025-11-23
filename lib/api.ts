@@ -52,3 +52,16 @@ export async function updatePost(post: Post) {
   }
   return res.json();
 }
+
+export async function deletePost(id: number | string) {
+  const res = await fetch(`${BASE_URL}/posts/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    throw new Error("Nie udało się usunąć posta");
+  }
+
+  // JSONPlaceholder zwraca pusty obiekt: {}
+  return res.json();
+}
