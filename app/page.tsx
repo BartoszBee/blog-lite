@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Post } from "@/types/Post";
 import { getPosts } from "@/lib/api";
+import PostCard from "@/components/PostCard";
 
 export default async function HomePage() {
   const posts: Post[] = await getPosts();
@@ -16,13 +17,8 @@ export default async function HomePage() {
       </Link>
       <ul className="space-y-3">
         {posts.map((post) => (
-          <li
-            key={post.id}
-            className="border rounded hover:bg-gray-50 transition p-4"
-          >
-            <Link href={`/posts/${post.id}`} className="text-lg font-semibold">
-              {post.title}
-            </Link>
+          <li key={post.id}>
+            <PostCard post={post} />
           </li>
         ))}
       </ul>

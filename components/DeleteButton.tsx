@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import { deletePost } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 export default function DeleteButton({ id }: { id: number }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [error, setError] = useState("");
@@ -17,6 +19,9 @@ export default function DeleteButton({ id }: { id: number }) {
     try {
       await deletePost(id);
       setDeleted(true);
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);
@@ -48,7 +53,7 @@ export default function DeleteButton({ id }: { id: number }) {
       <button
         onClick={handleDelete}
         disabled={loading}
-        className="px-4 py-2 bg-red-600 text-white rounded disabled:opacity-50 hover:bg-red-700"
+        className="px-5 py-2.5 bg-red-600 text-gray-900 rounded-lg hover:bg-red-700 transition font-medium cursor-pointer"
       >
         {loading ? "Usuwanie..." : "🗑️ Usuń post"}
       </button>

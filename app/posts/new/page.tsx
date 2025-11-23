@@ -72,7 +72,7 @@ export default function NewPostPage() {
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 hover:opacity-70"
+          className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50 hover:opacity-70 cursor-pointer"
         >
           {loading ? "Wysyłam..." : "Utwórz post"}
         </button>
@@ -98,7 +98,7 @@ export default function NewPostPage() {
       )}
       <button
         onClick={() => router.push("/")}
-        className="mt-6 px-4 py-2 bg-gray-300 rounded hover:opacity-70"
+        className="mt-6 px-4 py-2 bg-gray-300 rounded hover:opacity-70 cursor-pointer"
       >
         ← Powrót
       </button>

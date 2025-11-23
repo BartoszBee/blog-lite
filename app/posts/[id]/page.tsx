@@ -1,5 +1,5 @@
 import { getPost } from "@/lib/api";
-import { Post } from "@/types/Post";
+import type { Post } from "@/types/Post";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import DeleteButton from "@/components/DeleteButton";
@@ -18,28 +18,51 @@ export default async function PostPage({
     notFound();
   }
 
-  // jeżeli api zwróci pusty obiekt
   if (!post || !post.id) {
     notFound();
   }
 
   return (
-    <main className="p-6">
-      <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-      <p className="text-gray-700 mb-8 whitespace-pre-line">{post.body}</p>
-      <Link
-        href={`/posts/${post.id}/edit`}
-        className="inline-block mr-4 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-amber-400  transition"
-      >
-        ✏️ Edytuj post
-      </Link>
-      <DeleteButton id={post.id} />
-      <Link
-        href={`/`}
-        className="inline-block px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400  transition"
-      >
-        ← Powrót do listy
-      </Link>
+    <main className="p-6 max-w-3xl mx-auto">
+      {/* Karta posta */}
+      <article className="bg-white border rounded-xl shadow-sm p-8 mb-10">
+        {/* Tytuł */}
+        <h1 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
+          {post.title}
+        </h1>
+
+        {/* Treść */}
+        <div className="prose prose-lg text-gray-800 mb-10">
+          {/* używamy <div> zamiast <p>, by Tailwind Prose działał */}
+          <div className="whitespace-pre-line">{post.body}</div>
+        </div>
+
+        {/* Przyciski akcji */}
+        <div className="flex items-center gap-4 flex-wrap">
+          <Link
+            href={`/posts/${post.id}/edit`}
+            className="px-5 py-2.5 bg-yellow-500 text-white rounded-lg hover:bg-yellow-400 transition font-medium shadow-sm"
+          >
+            ✏️ Edytuj post
+          </Link>
+
+          <Link
+            href="/"
+            className="px-5 py-2.5 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition font-medium"
+          >
+            ← Powrót do listy
+          </Link>
+        </div>
+        <DeleteButton id={post.id} />
+      </article>
+
+      {/* Dodatkowa sekcja — jak w nowoczesnych blogach */}
+      <section className="text-gray-600 text-sm">
+        <p>
+          Post ID: <span className="font-semibold">{post.id}</span> • User ID:{" "}
+          <span className="font-semibold">{post.userId}</span>
+        </p>
+      </section>
     </main>
   );
 }
