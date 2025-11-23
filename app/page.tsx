@@ -1,13 +1,6 @@
 import Link from "next/link";
 import type { Post } from "@/types/Post";
-
-async function getPosts() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/posts");
-
-  if (!res.ok) throw new Error("Nie udało się pobrać postów");
-
-  return res.json();
-}
+import { getPosts } from "@/lib/api";
 
 export default async function HomePage() {
   const posts: Post[] = await getPosts();
