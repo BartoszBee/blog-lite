@@ -13,13 +13,23 @@ export default async function HomePage() {
   const posts: Post[] = await getPosts();
 
   return (
-    <main>
-      <h1>Lista postów</h1>
-      <Link href="/posts/new">➕ Dodaj nowy post</Link>
-      <ul>
+    <main className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Lista postów</h1>
+      <Link
+        href="/posts/new"
+        className="inline-block mb-6 px-4 py-2 bg-blue-600 text-white rounded"
+      >
+        ➕ Dodaj nowy post
+      </Link>
+      <ul className="space-y-3">
         {posts.map((post) => (
-          <li key={post.id}>
-            <Link href={`/posts/${post.id}`}>{post.title}</Link>
+          <li
+            key={post.id}
+            className="border rounded hover:bg-gray-50 transition p-4"
+          >
+            <Link href={`/posts/${post.id}`} className="text-lg font-semibold">
+              {post.title}
+            </Link>
           </li>
         ))}
       </ul>
