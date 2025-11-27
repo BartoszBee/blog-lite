@@ -22,14 +22,14 @@ BlogLite to edukacyjno-portfolio projekt, który prezentuje dwa kompletne sposob
 - `revalidatePath` po operacjach
 - pełen SSR — działanie bez JavaScript w przeglądarce
 
+3. React Query CRUD (/rq/*) — Zaawansowany CSR + Cache, Mutacje, Optimistic UI
+
+- Najbardziej profesjonalna wersja — użycie @tanstack/react-query
+- Automatyczny caching, refetching, invalidacje, mutacje
+
+
+
 Projekt korzysta z **JSONPlaceholder**, który udaje zapis danych (`POST/PUT/DELETE` zwracają dane, ale ich nie zapisują).
-
----
-
-# 🎯 **Cele projektu**
-
-- pokazanie znajomości dwóch stylów pracy z Next.js
-- zrozumienie różnic między SSR, CSR i Server Actions
 
 ---
 
