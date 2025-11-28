@@ -7,7 +7,7 @@ export default function RqLayout({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient();
 
   return (
-    <div className="bg-purple-300 p-6 rounded-lg min-h-[70vh]">
+    <div className="bg-sky-400 p-6 rounded-lg min-h-[70vh]">
       <QueryClientProvider client={queryClient}>
         {/* Każda strona w /rq będzie działać z React Query */}
         {children}

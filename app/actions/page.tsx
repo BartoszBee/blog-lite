@@ -8,7 +8,7 @@ export default async function ActionsHomePage() {
   const posts: Post[] = await getPosts();
 
   return (
-    <main className="p-6 max-w-3xl mx-auto">
+    <main>
       <h1 className="text-2xl font-bold mb-4">Lista postów (Server Actions)</h1>
 
       {/* 🔹 Link do tworzenia posta z Server Actions */}

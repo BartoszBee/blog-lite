@@ -23,7 +23,7 @@ export default function SwrHomePage() {
     );
 
   return (
-    <main className="p-6">
+    <main >
       <h1 className="text-2xl font-bold mb-4">
         Lista postów (SWR)
       </h1>

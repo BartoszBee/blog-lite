@@ -89,7 +89,7 @@ export default function RqNewPostPage() {
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="px-4 py-2 bg-purple-600 text-white rounded disabled:opacity-50 hover:opacity-70"
+          className="px-4 py-2 bg-sky-500 text-white rounded disabled:opacity-50 hover:opacity-70"
         >
           {mutation.isPending ? "Wysyłam..." : "Utwórz post"}
         </button>

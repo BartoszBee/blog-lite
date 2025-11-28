@@ -24,7 +24,7 @@ export default function RootLayout({
               {/* Link do klasycznego CRUD */}
               <Link
                 href="/"
-                className="px-3 py-1.5 rounded hover:bg-gray-200 transition text-sm font-medium border"
+                className="px-3 py-1.5 rounded-lg hover:bg-gray-200 transition text-sm font-medium border uppercase"
               >
                 posts (classic fetch)
               </Link>
@@ -32,19 +32,19 @@ export default function RootLayout({
               {/* Link do server actions CRUD */}
               <Link
                 href="/actions"
-                className="px-3 py-1.5 rounded bg-gray-500 hover:bg-gray-600 transition text-sm font-medium border"
+                className="px-3 py-1.5 rounded-lg bg-gray-500 hover:bg-gray-600 transition text-sm font-medium border uppercase text-white"
               >
                 posts (server actions)
               </Link>
               <Link
                 href="/rq"
-                className="px-3 py-1.5 rounded bg-purple-500 hover:bg-purple-600 transition text-sm font-medium border"
+                className="px-3 py-1.5 rounded-lg bg-sky-400 hover:bg-sky-500 transition text-sm font-medium border uppercase text-white"
               >
                 posts (react query)
               </Link>
               <Link
                 href="/swr"
-                className="px-3 py-1.5 rounded bg-green-500 hover:bg-green-600 transition text-sm font-medium border"
+                className="px-3 py-1.5 rounded-lg bg-green-500 hover:bg-green-600 transition text-sm font-medium border uppercase text-white"
               >
                 posts (SWR)
               </Link>

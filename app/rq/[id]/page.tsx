@@ -61,7 +61,7 @@ export default function RqPostPage({
         <div className="flex items-center gap-4 flex-wrap">
           <Link
             href={`/rq/${post.id}/edit`}
-            className="px-5 py-2.5 bg-purple-600 text-white rounded-lg hover:bg-purple-500 transition font-medium shadow-sm"
+            className="px-5 py-2.5 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition font-medium shadow-sm"
           >
             ✏️ Edytuj post (RQ)
           </Link>

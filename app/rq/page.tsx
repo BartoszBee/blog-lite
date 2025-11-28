@@ -26,14 +26,14 @@ export default function RqHomePage() {
     );
 
   return (
-    <main className="p-6">
+    <main>
       <h1 className="text-2xl font-bold mb-4">
         Lista postów (React Query)
       </h1>
 
       <Link
         href="/rq/new"
-        className="inline-block mb-6 px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition"
+        className="inline-block mb-6 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600 transition"
       >
         ➕ Dodaj nowy post (RQ)
       </Link>
