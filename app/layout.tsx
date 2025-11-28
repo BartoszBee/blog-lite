@@ -42,6 +42,12 @@ export default function RootLayout({
               >
                 posts (react query)
               </Link>
+              <Link
+                href="/swr"
+                className="px-3 py-1.5 rounded bg-green-500 hover:bg-green-600 transition text-sm font-medium border"
+              >
+                posts (SWR)
+              </Link>
             </div>
           </nav>
         </header>

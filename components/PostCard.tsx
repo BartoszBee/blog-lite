@@ -3,18 +3,20 @@ import type { Post } from "@/types/Post";
 
 type PostCardProps = {
   post: Post;
-  action?: "client" | "server" | "rq"; // domyślnie "client"
+  action?: "client" | "server" | "rq" | "swr"; // domyślnie "client"
 };
 
 // 🔹 Komponent wyświetlający kartę posta (wersja dual-mode: client/server)
 export default function PostCard({ post, action = "client" }: PostCardProps) {
   // wybór ścieżki w zależności od trybu
-  const href =
-    action === "server"
-      ? `/actions/${post.id}`
-      : action === "rq"
-      ? `/rq/${post.id}`
-      : `/posts/${post.id}`;
+  const paths: Record<string, string> = {
+    client: "/posts",
+    server: "/actions",
+    rq: "/rq",
+    swr: "/swr",
+  };
+
+  const href = `${paths[action] ?? "/posts"}/${post.id}`;
 
   return (
     <div className="border rounded-lg p-5 bg-white shadow-sm hover:shadow-md transition-shadow duration-200">
