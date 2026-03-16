@@ -60,6 +60,14 @@ export default function RootLayout({
                 <span className="w-2 h-2 rounded-full bg-violet-500"></span>
                 Zustand
               </Link>
+
+              <Link
+                href="/rtk"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition text-sm font-medium text-zinc-300 hover:text-white"
+              >
+                <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+                RTK Query
+              </Link>
             </div>
           </nav>
         </header>

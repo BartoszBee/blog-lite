@@ -3,7 +3,7 @@ import type { Post } from "@/types/Post";
 
 type PostCardProps = {
   post: Post;
-  action?: "client" | "server" | "rq" | "swr" | "zustand";
+  action?: "client" | "server" | "rq" | "swr" | "zustand" | "rtk";
 };
 
 const accentColor: Record<string, string> = {
@@ -12,6 +12,7 @@ const accentColor: Record<string, string> = {
   rq: "group-hover:text-sky-400",
   swr: "group-hover:text-emerald-400",
   zustand: "group-hover:text-violet-400",
+  rtk: "group-hover:text-orange-400",
 };
 
 export default function PostCard({ post, action = "client" }: PostCardProps) {
@@ -21,6 +22,7 @@ export default function PostCard({ post, action = "client" }: PostCardProps) {
     rq: "/rq",
     swr: "/swr",
     zustand: "/zustand",
+    rtk: "/rtk",
   };
 
   const href = `${paths[action] ?? "/posts"}/${post.id}`;

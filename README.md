@@ -1,47 +1,84 @@
-# 📘 BlogLite — Next.js CRUD Showcase
+# BlogLite — Next.js CRUD Showcase
 
-**Porównanie czterech podejść do tworzenia CRUD w Next.js: klasyczny fetch, Server Actions, React Query oraz SWR**
+Porównanie **sześciu podejść** do budowania CRUD w Next.js App Router.
 
-BlogLite to edukacyjno-portfolio projekt, który prezentuje cztery kompletne sposoby budowania CRUD w Next.js:
-
-## 🔵 1. Klasyczny CRUD (`/posts/*`)
-
-- fetch w `lib/api.ts`
-- komponenty klientowe
-- `useState`, `useEffect`
-- obsługa błędów po stronie klienta
-- routing oparty na `useRouter`
-- pełen flow: list → view → create → edit → delete
-
-## 🟡 2. Server Actions CRUD (`/actions/*`)
-
-- mutacje wykonywane po stronie serwera
-- brak `useState` i `useEffect`
-- formularze HTML (`form action={...}`)
-- automatyczne `redirect()` po mutacji
-- `revalidatePath` po operacjach
-- pełen SSR — działanie bez JavaScript w przeglądarce
-
-## 🟣 3. React Query CRUD (/rq/*) — Zaawansowany CSR + Cache, Mutacje, Optimistic UI
-
-- Najbardziej profesjonalna wersja — użycie @tanstack/react-query
-- Automatyczny caching, refetching, invalidacje, mutacje
-
-## 🟢 4. SWR CRUD (/swr/*)
-
-- ultralekka alternatywa dla React Query
-
-
-Projekt korzysta z **JSONPlaceholder**, który udaje zapis danych (`POST/PUT/DELETE` zwracają dane, ale ich nie zapisują).
+Projekt powstał jako osobista ściągawka i showcase różnych strategii data-fetchingu — od klasycznego `fetch` przez Server Actions, aż po RTK Query. Każda sekcja to kompletny CRUD z tą samą funkcjonalnością, zaimplementowany inaczej.
 
 ---
 
-# 🛠️ **Tech stack**
+## Podejścia
 
-- **Next.js 15 (App Router)**
-- **React 18**
-- **TypeScript**
-- **Tailwind CSS**
-- **Server Actions**
-- **SSR / fetch API**
-- **JSONPlaceholder REST API**
+### 1. Classic Fetch — `/`
+- `useState` + `useEffect` + ręczne wywołania `fetch`
+- Obsługa loading/error po stronie klienta
+- Nawigacja przez `useRouter`
+- Fundamenty — tak działał React zanim pojawiły się dedykowane biblioteki
+
+### 2. Server Actions — `/actions`
+- Mutacje wykonywane po stronie serwera (`"use server"`)
+- Formularze HTML bez JavaScript (`form action={...}`)
+- Automatyczne `redirect()` i `revalidatePath()` po mutacji
+- Pełen SSR — działa bez JS w przeglądarce
+
+### 3. React Query — `/rq`
+- `@tanstack/react-query` — standard w branży
+- `useQuery` do pobierania, `useMutation` do mutacji
+- Automatyczny cache, refetching, invalidacja przez `queryKey`
+- `QueryClientProvider` jako wrapper sekcji
+
+### 4. SWR — `/swr`
+- Lekka alternatywa od Vercel
+- `useSWR` + `useSWRConfig` do rewalidacji
+- Auto-rewalidacja przy powrocie do zakładki / odzyskaniu połączenia
+- Mniej konfiguracji niż React Query
+
+### 5. Zustand — `/zustand`
+- Globalny store bez providera
+- Stan i akcje w jednym miejscu (`create<State>((set) => {...})`)
+- Najprostszy do użycia — `usePostsStore()` działa wszędzie bez owijania drzewa
+- Popularny w nowych projektach jako lekka alternatywa dla Redux
+
+### 6. RTK Query — `/rtk`
+- `@reduxjs/toolkit` — standard w dużych / enterprise projektach
+- Deklaratywne API: `createApi` + `builder.query` / `builder.mutation`
+- Tag system (`providesTags` / `invalidatesTags`) — automatyczna invalidacja cache
+- `.unwrap()` do obsługi błędów przez `try/catch`
+- Redux Provider jako wrapper sekcji
+
+---
+
+## Kiedy co wybrać
+
+| Podejście | Kiedy użyć |
+|-----------|-----------|
+| Classic Fetch | Proste projekty, nauka podstaw |
+| Server Actions | Next.js — mutacje bez API route, SEO-first |
+| React Query | Większość projektów CSR — najlepszy DX |
+| SWR | Lekkie projekty, Vercel ecosystem |
+| Zustand | Globalny stan bez Redux, małe/średnie projekty |
+| RTK Query | Duże projekty, zespoły z Reduxem, enterprise |
+
+---
+
+## Tech stack
+
+- **Next.js 16** (App Router)
+- **React 19**
+- **TypeScript 5**
+- **Tailwind CSS 4**
+- **TanStack React Query 5**
+- **SWR 2**
+- **Zustand 5**
+- **Redux Toolkit 2** (RTK Query)
+- **JSONPlaceholder** — mock REST API
+
+---
+
+## Uruchomienie
+
+```bash
+npm install
+npm run dev
+```
+
+Otwórz [http://localhost:3000](http://localhost:3000)
