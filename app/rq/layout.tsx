@@ -2,15 +2,14 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export default function RqLayout({ children }: { children: React.ReactNode }) {
-  // Singleton QueryClient dla sekcji RQ
-  const queryClient = new QueryClient();
+const queryClient = new QueryClient();
 
+export default function RqLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-sky-400 p-6 rounded-lg min-h-[70vh]">
+    <div className="bg-zinc-900 border border-zinc-800 rounded-xl min-h-[70vh] overflow-hidden">
+      <div className="h-1 bg-sky-500" />
       <QueryClientProvider client={queryClient}>
-        {/* Każda strona w /rq będzie działać z React Query */}
-        {children}
+        <div className="p-6">{children}</div>
       </QueryClientProvider>
     </div>
   );

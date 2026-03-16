@@ -1,59 +1,45 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import useSWR, { useSWRConfig } from "swr";
 import Link from "next/link";
+import { usePostsStore } from "@/lib/postsStore";
 import type { Post } from "@/types/Post";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-export default function EditPostSWRPage({
+export default function EditPostZustandPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const [resolvedId, setResolvedId] = useState<string | null>(null);
-
-  useEffect(() => {
-    params.then(({ id }) => setResolvedId(id));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const postUrl = resolvedId
-    ? `https://jsonplaceholder.typicode.com/posts/${resolvedId}`
-    : null;
-
-  const { data: post, error } = useSWR<Post>(postUrl, fetcher);
-  const { mutate } = useSWRConfig();
+  const [id, setId] = useState<number | null>(null);
+  const { post, loading, error, fetchPost, updatePost } = usePostsStore();
 
   const [editPost, setEditPost] = useState<Post | null>(null);
   const [updated, setUpdated] = useState<Post | null>(null);
   const [saveError, setSaveError] = useState("");
 
   useEffect(() => {
+    params.then(({ id }) => setId(Number(id)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (id !== null) fetchPost(id);
+  }, [id, fetchPost]);
+
+  useEffect(() => {
     if (post) setEditPost(post);
   }, [post]);
 
-  if (error) return <p className="p-6 text-red-400">Nie udało się pobrać posta.</p>;
-  if (!post || !editPost) return <p className="p-6 text-zinc-400">Ładowanie...</p>;
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!editPost) return;
     setSaveError("");
     setUpdated(null);
 
     try {
-      const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${editPost!.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editPost),
-      });
-      if (!res.ok) throw new Error("Nie udało się zaktualizować posta");
-      const result = await res.json();
+      const result = await updatePost(editPost);
       setUpdated(result);
-      await mutate(postUrl);
-      mutate("https://jsonplaceholder.typicode.com/posts");
-    } catch (err: unknown) {
+    } catch (err) {
       setSaveError(err instanceof Error ? err.message : "Błąd zapisu");
     }
   }
@@ -62,9 +48,12 @@ export default function EditPostSWRPage({
     setEditPost((prev) => (prev ? { ...prev, [field]: value } : prev));
   }
 
+  if (error) return <p className="p-6 text-red-400">{error}</p>;
+  if (!post || !editPost || loading) return <p className="p-6 text-zinc-400">Ładowanie...</p>;
+
   return (
     <main className="p-6 max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Edytuj post (SWR)</h1>
+      <h1 className="text-3xl font-bold mb-6">Edytuj post (Zustand)</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -93,7 +82,7 @@ export default function EditPostSWRPage({
         </div>
       )}
 
-      <Link href="/swr" className="inline-block px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg transition mt-6">
+      <Link href="/zustand" className="inline-block px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg transition mt-6">
         ← Powrót
       </Link>
     </main>

@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { deletePost } from "@/lib/api";
 import { useRouter } from "next/navigation";
@@ -23,11 +24,7 @@ export default function DeleteButton({ id }: { id: number }) {
         router.push("/");
       }, 2000);
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Nie udało się usunąć posta");
-      }
+      setError(err instanceof Error ? err.message : "Nie udało się usunąć posta");
     } finally {
       setLoading(false);
     }
@@ -35,25 +32,20 @@ export default function DeleteButton({ id }: { id: number }) {
 
   if (deleted) {
     return (
-      <div className="mt-6 p-4 border border-red-600 bg-red-50 rounded">
-        <h2 className="text-xl font-bold text-red-700 mb-2">
-          Fake post deleted ❌
-        </h2>
-        <p className="text-gray-700">
-          JSONPlaceholder nie usuwa postów — to tylko symulacja.
-        </p>
+      <div className="mt-6 p-4 border border-red-500/40 rounded-lg bg-red-950/30">
+        <h2 className="text-xl font-bold text-red-400 mb-2">Fake post deleted ❌</h2>
+        <p className="text-zinc-400">JSONPlaceholder nie usuwa postów — to tylko symulacja.</p>
       </div>
     );
   }
 
   return (
     <div className="my-6">
-      {error && <p className="text-red-600 mb-2">{error}</p>}
-
+      {error && <p className="text-red-400 mb-2">{error}</p>}
       <button
         onClick={handleDelete}
         disabled={loading}
-        className="px-5 py-2.5 bg-red-600 text-gray-900 rounded-lg hover:bg-red-700 transition font-medium cursor-pointer"
+        className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg transition font-medium cursor-pointer disabled:opacity-50"
       >
         {loading ? "Usuwanie..." : "🗑️ Usuń post"}
       </button>

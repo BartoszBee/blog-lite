@@ -1,34 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { fetchPost } from "@/lib/rqApi";
 import Link from "next/link";
-import DeleteButtonRQ from "@/components/DeleteButtonRQ";
+import { usePostsStore } from "@/lib/postsStore";
+import DeleteButtonZustand from "@/components/DeleteButtonZustand";
 
-export default function RqPostPage({
+export default function ZustandPostPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const [id, setId] = useState<string>("");
+  const [id, setId] = useState<number | null>(null);
+  const { post, loading, error, fetchPost } = usePostsStore();
 
   useEffect(() => {
-    async function unwrap() {
-      const { id } = await params;
-      setId(id);
-    }
-    unwrap();
-  }, [params]);
+    params.then(({ id }) => setId(Number(id)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const { data: post, isLoading, isError, error } = useQuery({
-    queryKey: ["post", id],
-    queryFn: () => fetchPost(id),
-    enabled: !!id,
-  });
+  useEffect(() => {
+    if (id !== null) fetchPost(id);
+  }, [id, fetchPost]);
 
-  if (!id || isLoading) return <p className="p-6 text-zinc-400">Ładowanie...</p>;
-  if (isError) return <p className="p-6 text-red-400">Błąd: {(error as Error).message}</p>;
+  if (!id || loading) return <p className="p-6 text-zinc-400">Ładowanie...</p>;
+  if (error) return <p className="p-6 text-red-400">{error}</p>;
   if (!post) return <p className="p-6 text-red-400">Nie znaleziono posta.</p>;
 
   return (
@@ -42,16 +37,16 @@ export default function RqPostPage({
 
         <div className="flex items-center gap-4 flex-wrap">
           <Link
-            href={`/rq/${post.id}/edit`}
-            className="px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg transition font-medium"
+            href={`/zustand/${post.id}/edit`}
+            className="px-5 py-2.5 bg-violet-600 hover:bg-violet-500 text-white rounded-lg transition font-medium"
           >
-            ✏️ Edytuj post (RQ)
+            ✏️ Edytuj post (Zustand)
           </Link>
 
-          <DeleteButtonRQ id={post.id} />
+          <DeleteButtonZustand id={post.id} />
 
           <Link
-            href="/rq"
+            href="/zustand"
             className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg transition font-medium"
           >
             ← Powrót do listy

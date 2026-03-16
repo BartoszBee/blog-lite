@@ -20,6 +20,7 @@ export default async function PostServerActionPage({
   const { id } = await params;
   const queryParams = await searchParams;
   const fake = queryParams.fake === "1";
+
   if (fake) {
     const post: Post = {
       id: Number(id),
@@ -27,9 +28,9 @@ export default async function PostServerActionPage({
       title: queryParams.title || "(Brak tytułu)",
       body: queryParams.body || "(Brak treści)",
     };
-
     return <FakePostView post={post} />;
   }
+
   let post: Post | null = null;
 
   try {
@@ -38,57 +39,47 @@ export default async function PostServerActionPage({
     notFound();
   }
 
-  if (!post || !post.id) {
-    notFound();
-  }
+  if (!post || !post.id) notFound();
 
   return (
     <main className="p-6 max-w-3xl mx-auto">
-      {/* Karta posta */}
-      <article className="bg-white border rounded-xl shadow-sm p-8 mb-10">
-        {/* Tytuł */}
-        <h1 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
+      <article className="bg-zinc-900 border border-zinc-800 rounded-xl p-8 mb-10">
+        <h1 className="text-4xl font-bold text-zinc-100 mb-6 leading-tight">
           {post.title}
         </h1>
 
-        {/* Treść */}
-        <div className="prose prose-lg text-gray-800 mb-10">
-          <div className="whitespace-pre-line">{post.body}</div>
+        <div className="text-zinc-300 mb-10 leading-relaxed whitespace-pre-line">
+          {post.body}
         </div>
 
-        {/* Przyciski akcji */}
         <div className="flex items-center gap-4 flex-wrap">
-          {/* 🔹 Edytuj — wersja Server Actions */}
           <Link
             href={`/actions/${post.id}/edit`}
-            className="px-5 py-2.5 bg-yellow-500 text-white rounded-lg hover:bg-yellow-400 transition font-medium shadow-sm"
+            className="px-5 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-black rounded-lg transition font-medium"
           >
             ✏️ Edytuj post (SA)
           </Link>
 
-          {/* 🔹 Usuń — SERVER ACTION */}
           <form action={deletePostAction}>
             <input type="hidden" name="id" value={post.id} />
-            <button className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-medium shadow-sm">
+            <button className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg transition font-medium cursor-pointer">
               🗑️ Usuń (SA)
             </button>
           </form>
 
-          {/* 🔹 Powrót */}
           <Link
             href="/actions"
-            className="px-5 py-2.5 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition font-medium"
+            className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg transition font-medium"
           >
             ← Powrót do listy
           </Link>
         </div>
       </article>
 
-      {/* Dodatkowa sekcja */}
-      <section className="text-gray-600 text-sm">
+      <section className="text-zinc-500 text-sm">
         <p>
-          Post ID: <span className="font-semibold">{post.id}</span> • User ID:{" "}
-          <span className="font-semibold">{post.userId}</span>
+          Post ID: <span className="font-semibold text-zinc-400">{post.id}</span> • User ID:{" "}
+          <span className="font-semibold text-zinc-400">{post.userId}</span>
         </p>
       </section>
     </main>

@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useSWRConfig } from "swr";
+import { usePostsStore } from "@/lib/postsStore";
 import type { Post } from "@/types/Post";
 
-export default function NewPostSWRPage() {
+export default function NewPostZustandPage() {
   const router = useRouter();
-  const { mutate } = useSWRConfig();
+  const { createPost } = usePostsStore();
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -22,16 +22,9 @@ export default function NewPostSWRPage() {
     setCreated(null);
 
     try {
-      const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, body, userId: 1 }),
-      });
-      if (!res.ok) throw new Error("Nie udało się utworzyć posta");
-      const data = await res.json();
+      const data = await createPost({ title, body });
       setCreated(data);
-      mutate("https://jsonplaceholder.typicode.com/posts", undefined, { revalidate: true });
-    } catch (err: unknown) {
+    } catch (err) {
       setError(err instanceof Error ? err.message : "Wystąpił błąd");
     } finally {
       setLoading(false);
@@ -40,7 +33,7 @@ export default function NewPostSWRPage() {
 
   return (
     <main className="p-6 max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Dodaj nowy post (SWR)</h1>
+      <h1 className="text-3xl font-bold mb-6">Dodaj nowy post (Zustand)</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -55,7 +48,7 @@ export default function NewPostSWRPage() {
         <button
           type="submit"
           disabled={loading}
-          className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg disabled:opacity-50 transition"
+          className="px-4 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-lg disabled:opacity-50 transition"
         >
           {loading ? "Wysyłam..." : "Utwórz post"}
         </button>
@@ -74,7 +67,7 @@ export default function NewPostSWRPage() {
       )}
 
       <button
-        onClick={() => router.push("/swr")}
+        onClick={() => router.push("/zustand")}
         className="mt-6 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg transition"
       >
         ← Powrót

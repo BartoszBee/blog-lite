@@ -6,34 +6,21 @@ import PostCard from "@/components/PostCard";
 import Link from "next/link";
 
 export default function RqHomePage() {
-  // Pobieranie danych z React Query
-  const {
-    data: posts,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
+  const { data: posts, isLoading, isError, error } = useQuery({
     queryKey: ["posts"],
     queryFn: fetchPosts,
   });
 
-  if (isLoading) return <p className="p-6">Ładowanie...</p>;
-  if (isError)
-    return (
-      <p className="p-6 text-red-600">
-        Błąd: {(error as Error).message}
-      </p>
-    );
+  if (isLoading) return <p className="text-zinc-400">Ładowanie...</p>;
+  if (isError) return <p className="text-red-400">Błąd: {(error as Error).message}</p>;
 
   return (
     <main>
-      <h1 className="text-2xl font-bold mb-4">
-        Lista postów (React Query)
-      </h1>
+      <h1 className="text-2xl font-bold mb-4">Lista postów (React Query)</h1>
 
       <Link
         href="/rq/new"
-        className="inline-block mb-6 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-600 transition"
+        className="inline-block mb-6 px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white rounded-lg transition text-sm font-medium"
       >
         ➕ Dodaj nowy post (RQ)
       </Link>

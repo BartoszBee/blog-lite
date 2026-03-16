@@ -13,46 +13,58 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pl">
-      <body className="bg-gray-50 text-gray-900">
-        <header className="bg-white border-b shadow-sm">
-          <nav className="mx-auto max-w-4xl px-4 py-3 flex items-center justify-between">
-            <Link href="/" className="text-xl font-bold text-gray-800">
-              BlogLite
+      <body className="bg-zinc-950 text-zinc-100 min-h-screen">
+        <header className="bg-zinc-900 border-b border-zinc-800 sticky top-0 z-10">
+          <nav className="mx-auto max-w-5xl px-4 py-3 flex items-center justify-between">
+            <Link href="/" className="text-lg font-bold tracking-tight">
+              Blog<span className="text-zinc-500">Lite</span>
             </Link>
 
-            <div className="flex gap-4">
-              {/* Link do klasycznego CRUD */}
+            <div className="flex items-center gap-1">
               <Link
                 href="/"
-                className="px-3 py-1.5 rounded-lg hover:bg-gray-200 transition text-sm font-medium border uppercase"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition text-sm font-medium text-zinc-300 hover:text-white"
               >
-                posts (classic fetch)
+                <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                Classic
               </Link>
 
-              {/* Link do server actions CRUD */}
               <Link
                 href="/actions"
-                className="px-3 py-1.5 rounded-lg bg-gray-500 hover:bg-gray-600 transition text-sm font-medium border uppercase text-white"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition text-sm font-medium text-zinc-300 hover:text-white"
               >
-                posts (server actions)
+                <span className="w-2 h-2 rounded-full bg-slate-400"></span>
+                Server Actions
               </Link>
+
               <Link
                 href="/rq"
-                className="px-3 py-1.5 rounded-lg bg-sky-400 hover:bg-sky-500 transition text-sm font-medium border uppercase text-white"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition text-sm font-medium text-zinc-300 hover:text-white"
               >
-                posts (react query)
+                <span className="w-2 h-2 rounded-full bg-sky-500"></span>
+                React Query
               </Link>
+
               <Link
                 href="/swr"
-                className="px-3 py-1.5 rounded-lg bg-green-500 hover:bg-green-600 transition text-sm font-medium border uppercase text-white"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition text-sm font-medium text-zinc-300 hover:text-white"
               >
-                posts (SWR)
+                <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                SWR
+              </Link>
+
+              <Link
+                href="/zustand"
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 transition text-sm font-medium text-zinc-300 hover:text-white"
+              >
+                <span className="w-2 h-2 rounded-full bg-violet-500"></span>
+                Zustand
               </Link>
             </div>
           </nav>
         </header>
 
-        <main className="mx-auto max-w-4xl py-8 px-4">{children}</main>
+        <main className="mx-auto max-w-5xl py-8 px-4">{children}</main>
       </body>
     </html>
   );

@@ -18,49 +18,41 @@ export default async function PostPage({
     notFound();
   }
 
-  if (!post || !post.id) {
-    notFound();
-  }
+  if (!post || !post.id) notFound();
 
   return (
     <main className="p-6 max-w-3xl mx-auto">
-      {/* Karta posta */}
-      <article className="bg-white border rounded-xl shadow-sm p-8 mb-10">
-        {/* Tytuł */}
-        <h1 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
+      <article className="bg-zinc-900 border border-zinc-800 rounded-xl p-8 mb-10">
+        <h1 className="text-4xl font-bold text-zinc-100 mb-6 leading-tight">
           {post.title}
         </h1>
 
-        {/* Treść */}
-        <div className="prose prose-lg text-gray-800 mb-10">
-          {/* używamy <div> zamiast <p>, by Tailwind Prose działał */}
-          <div className="whitespace-pre-line">{post.body}</div>
+        <div className="text-zinc-300 mb-10 leading-relaxed whitespace-pre-line">
+          {post.body}
         </div>
 
-        {/* Przyciski akcji */}
         <div className="flex items-center gap-4 flex-wrap">
           <Link
             href={`/posts/${post.id}/edit`}
-            className="px-5 py-2.5 bg-yellow-500 text-white rounded-lg hover:bg-yellow-400 transition font-medium shadow-sm"
+            className="px-5 py-2.5 bg-yellow-500 hover:bg-yellow-400 text-black rounded-lg transition font-medium"
           >
             ✏️ Edytuj post
           </Link>
-
+          <DeleteButton id={post.id} />
           <Link
             href="/"
-            className="px-5 py-2.5 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition font-medium"
+            className="px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 rounded-lg transition font-medium"
           >
             ← Powrót do listy
           </Link>
         </div>
-        <DeleteButton id={post.id} />
       </article>
 
-      {/* Dodatkowa sekcja — jak w nowoczesnych blogach */}
-      <section className="text-gray-600 text-sm">
+      <section className="text-zinc-500 text-sm">
         <p>
-          Post ID: <span className="font-semibold">{post.id}</span> • User ID:{" "}
-          <span className="font-semibold">{post.userId}</span>
+          Post ID:{" "}
+          <span className="font-semibold text-zinc-400">{post.id}</span> • User
+          ID: <span className="font-semibold text-zinc-400">{post.userId}</span>
         </p>
       </section>
     </main>

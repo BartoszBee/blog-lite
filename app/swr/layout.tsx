@@ -1,5 +1,8 @@
 export default function SwrLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-green-300 p-6 rounded-lg min-h-[70vh]">{children}</div>
+    <div className="bg-zinc-900 border border-zinc-800 rounded-xl min-h-[70vh] overflow-hidden">
+      <div className="h-1 bg-emerald-500" />
+      <div className="p-6">{children}</div>
+    </div>
   );
 }
